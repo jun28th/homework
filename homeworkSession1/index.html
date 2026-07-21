@@ -10,11 +10,37 @@
 <body>
    <header class="site-header">
     <div class="logo">Homework Session 1</div>
-    <div class="cart-icon">🛍 Giỏ hàng (0)</div>
+     <div class="cart-icon" onclick="toggleCart()">🛍 Giỏ hàng (<span id="cartCount">0</span>)</div>
   </header>
 
-   <main class="product-grid" id="productGrid">
-   </main>
+   <main class="product-grid" id="productGrid"></main>
+   <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+   <aside class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h2>Giỏ hàng của bạn</h2>
+        <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+        <!-- JS render danh sách sản phẩm đã chọn -->
+    </div>
+
+    <div class="cart-form">
+        <label>Họ tên</label>
+        <input type="text" id="customerName" placeholder="Nhập họ tên">
+
+        <label>Địa chỉ giao hàng</label>
+        <input type="text" id="customerAddress" placeholder="Nhập địa chỉ">
+
+        <label class="checkbox-row">
+        <input type="checkbox" id="isMember" onchange="updateSummary()">
+        Tôi là thành viên (giảm thêm 5%)
+        </label>
+    </div>
+
+    <button class="btn-checkout">Đặt hàng</button>
+    </aside>
+
    <script src="products.js"></script>
 </body>
 </html>

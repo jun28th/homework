@@ -52,10 +52,46 @@ function renderProducts() {
   `).join("");
 }
 
+function updateCartCount() {
+  const totalQty = products.reduce((sum, p) => sum + p.quantity, 0);
+  document.getElementById("cartCount").textContent = totalQty;
+}
+
+function toggleCart() {
+  document.getElementById("cartSidebar").classList.toggle("active");
+  document.getElementById("cartOverlay").classList.toggle("active");
+  renderCartItems();
+  updateSummary();
+}
+
+function renderCartItems() {
+  const cartItemsEl = document.getElementById("cartItems");
+  const selected = products.filter(p => p.quantity > 0);
+
+  if (selected.length === 0) {
+    cartItemsEl.innerHTML = `<p class="cart-empty">Chưa có sản phẩm nào trong giỏ.</p>`;
+    return;
+  }
+
+  cartItemsEl.innerHTML = selected.map(p => `
+    <div class="cart-item-row">
+      <div>
+        <div class="cart-item-name">${p.name}</div>
+        <div class="cart-item-meta">${formatPrice(p.price)} × ${p.quantity}</div>
+      </div>
+      <div>${formatPrice(p.price * p.quantity)}</div>
+    </div>
+  `).join("");
+}
+
 function changeQty(index, delta) {
   const newQty = products[index].quantity + delta;
   if (newQty < 0) return; // không cho số âm
   products[index].quantity = newQty;
   renderProducts(); // render lại để cập nhật số hiển thị
+  updateCartCount(); 
+  renderCartItems();
 }
+
 renderProducts();
+updateCartCount(); 
