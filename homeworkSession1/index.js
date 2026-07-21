@@ -172,6 +172,8 @@ function handleCheckout() {
   document.getElementById("customerName").value = "";
   document.getElementById("customerAddress").value = "";
   document.getElementById("isMember").checked = false;
+  document.getElementById("nameError").textContent = "";
+  document.getElementById("customerName").classList.remove("invalid");
 
   // Render lại toàn bộ giao diện
   renderProducts();
