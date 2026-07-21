@@ -84,6 +84,48 @@ function renderCartItems() {
   `).join("");
 }
 
+function updateSummary() {
+  // Tạm tính = giá gốc (nếu có oldPrice) × số lượng
+  let subtotal = 0;
+  let discount = 0;
+
+  products.forEach(p => {
+    if (p.quantity > 0) {
+      const base = p.oldPrice || p.price;
+      subtotal += base * p.quantity;
+      if (p.oldPrice) {
+        discount += (p.oldPrice - p.price) * p.quantity;
+      }
+    }
+  });
+
+  const afterDiscount = subtotal - discount;
+
+  // Ưu đãi thành viên 5%
+  const isMember = document.getElementById("isMember").checked;
+  const memberDiscount = isMember ? afterDiscount * 0.05 : 0;
+
+  const afterMember = afterDiscount - memberDiscount;
+
+  // Thuế 8%
+  const tax = afterMember * 0.08;
+
+  const total = afterMember + tax;
+
+  document.getElementById("sumSubtotal").textContent = formatPrice(subtotal);
+  document.getElementById("sumDiscount").textContent = "-" + formatPrice(discount);
+  document.getElementById("sumTax").textContent = formatPrice(tax);
+  document.getElementById("sumTotal").textContent = formatPrice(total);
+
+  const memberRow = document.getElementById("memberRow");
+  if (isMember) {
+    memberRow.style.display = "flex";
+    document.getElementById("sumMember").textContent = "-" + formatPrice(memberDiscount);
+  } else {
+    memberRow.style.display = "none";
+  }
+}
+
 function changeQty(index, delta) {
   const newQty = products[index].quantity + delta;
   if (newQty < 0) return; // không cho số âm
@@ -91,6 +133,7 @@ function changeQty(index, delta) {
   renderProducts(); // render lại để cập nhật số hiển thị
   updateCartCount(); 
   renderCartItems();
+  updateSummary();
 }
 
 renderProducts();

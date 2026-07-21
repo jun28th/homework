@@ -326,6 +326,21 @@ body {
   padding-top: 10px;
 }
 
+.error-message {
+  color: #c0392b;
+  font-size: 12px;
+  margin-top: -4px;
+  display: none;
+}
+
+.error-message.active {
+  display: block;
+}
+
+.cart-form input.invalid {
+  border-color: #c0392b;
+}
+
 .btn-checkout {
   margin-top: 16px;
   width: 100%;

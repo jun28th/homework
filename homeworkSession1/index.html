@@ -27,7 +27,8 @@
 
     <div class="cart-form">
         <label>Họ tên</label>
-        <input type="text" id="customerName" placeholder="Nhập họ tên">
+        <input type="text" id="customerName" placeholder="Nhập họ tên" oninput="validateName()">
+        <span class="error-message" id="nameError"></span>
 
         <label>Địa chỉ giao hàng</label>
         <input type="text" id="customerAddress" placeholder="Nhập địa chỉ">
@@ -38,9 +39,33 @@
         </label>
     </div>
 
+    <div class="cart-summary">
+        <div class="summary-row">
+        <span>Tạm tính</span>
+        <span id="sumSubtotal">0₫</span>
+        </div>
+        <div class="summary-row">
+        <span>Giảm giá (sale)</span>
+        <span id="sumDiscount">-0₫</span>
+        </div>
+        <div class="summary-row" id="memberRow" style="display:none">
+        <span>Ưu đãi thành viên (5%)</span>
+        <span id="sumMember">-0₫</span>
+        </div>
+        <div class="summary-row">
+        <span>Thuế (8%)</span>
+        <span id="sumTax">0₫</span>
+        </div>
+        <div class="summary-row total">
+        <span>Tổng cộng</span>
+        <span id="sumTotal">0₫</span>
+        </div>
+    </div>
+
     <button class="btn-checkout">Đặt hàng</button>
     </aside>
-
+    
    <script src="products.js"></script>
+   <script src="checkValid.js"></script>
 </body>
 </html>
