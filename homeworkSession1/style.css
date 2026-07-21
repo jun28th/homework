@@ -8,7 +8,7 @@
   --bg: #ffffff;
   --ink: #000000;
   --muted: #7a766e;
-  --accent: #a9532f;
+  --accent: #d3e2ff;
   --card-bg: #ffffff;
   --border: #e6e1d6;
 }
@@ -28,7 +28,7 @@ body {
   padding: 24px 48px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 48px;
-  background: #d3e2ff;
+  background: var(--accent);
 }
 
 .logo {
