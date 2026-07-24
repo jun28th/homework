@@ -11,9 +11,7 @@ let products = [{ name: "Sản phẩm 1", price: 450000 },
 let cart = [];
 let isMember = false; 
 
-productCart();
- 
-let discount = isMember == true ? 0.05 : 0;
+checkMember();
 
 function productList() {
   console.log("\n--- DANH SÁCH SẢN PHẨM ---");
@@ -38,7 +36,7 @@ function productCart() {
         console.log(`Số "${so}" không hợp lệ, bỏ qua.`);
       }
     });
-    checkMember();
+    totalPrice();
   });
 }
 
@@ -46,12 +44,10 @@ function checkMember() {
   readline.question('Bạn có phải là thành viên không? (Y/N): ', (answer) => {
     if (answer === 'Y') {
       isMember = true;
-      readline.close();
-      totalPrice();
+      productCart();
     } else if (answer === 'N') {
       isMember = false;
-      readline.close();
-      totalPrice();
+      productCart();
     } else {
       console.log("Vui lòng nhập Y hoặc N.");
       checkMember();
@@ -60,9 +56,27 @@ function checkMember() {
 }
 
 function totalPrice() {
-    let finalPrice = cart - (cart * discount) + (cart * TAX);  
-    console.log("Tổng tiền: " + cart + " VND");
-    console.log("Giảm giá thành viên: " + discount*10 + " %");
+    const subtotal = cart.reduce((total, price) => total + price, 0);
+    let discount = isMember == true ? 0.05 : 0;
+    let finalPrice = subtotal - (subtotal * discount) + (subtotal * TAX);  
+    console.log("Tổng tiền: " + subtotal.toLocaleString() + " VND");
+    console.log("Giảm giá thành viên: " + discount*100 + "%");
     console.log(`Thuế: ${(TAX * 100)}%`);
     console.log("Số tiền cần thanh toán: " + finalPrice);  
+    askContinue();
+}
+
+function askContinue() {
+  readline.question('Bạn có muốn mua thêm không? (Y/N): ', (answer) => {
+    if (answer === 'Y') {
+        cart = [];
+        productCart();
+    } else if (answer === 'N') {
+        console.log("Cảm ơn bạn đã mua hàng!");
+        readline.close();
+    } else {
+        console.log("Vui lòng nhập Y hoặc N.");
+        askContinue();
+    }
+  });
 }
