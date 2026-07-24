@@ -2,16 +2,16 @@ const readline = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout
 });
-1
+
 const TAX = 0.08;
 let products = [{ name: "Sản phẩm 1", price: 450000 },
             { name: "Sản phẩm 2", price: 520000 },
             { name: "Sản phẩm 3", price: 550000 }];
 
 let cart = [];
-productCart();
-
 let isMember = false; 
+
+productCart();
  
 let discount = isMember == true ? 0.05 : 0;
 
@@ -42,7 +42,21 @@ function productCart() {
         console.log(`Số "${so}" không hợp lệ, bỏ qua.`);
       }
     });
-    readline.close();
+    checkMember();
   });
 }
 
+function checkMember() {
+  readline.question('Bạn có phải là thành viên không? (Y/N): ', (answer) => {
+    if (answer === 'Y') {
+      isMember = true;
+      readline.close();
+    } else if (answer === 'N') {
+      isMember = false;
+      readline.close();
+    } else {
+      console.log("Vui lòng nhập Y hoặc N.");
+      checkMember();
+    }
+  });
+}
