@@ -15,10 +15,6 @@ productCart();
  
 let discount = isMember == true ? 0.05 : 0;
 
-let finalPrice = cart - (cart * discount) + (cart * TAX);  
-
-// console.log("Total price: " + finalPrice);
-
 function productList() {
   console.log("\n--- DANH SÁCH SẢN PHẨM ---");
   products.forEach((product, index) => {
@@ -51,12 +47,22 @@ function checkMember() {
     if (answer === 'Y') {
       isMember = true;
       readline.close();
+      totalPrice();
     } else if (answer === 'N') {
       isMember = false;
       readline.close();
+      totalPrice();
     } else {
       console.log("Vui lòng nhập Y hoặc N.");
       checkMember();
     }
   });
+}
+
+function totalPrice() {
+    let finalPrice = cart - (cart * discount) + (cart * TAX);  
+    console.log("Tổng tiền: " + cart + " VND");
+    console.log("Giảm giá thành viên: " + discount*10 + " %");
+    console.log(`Thuế: ${(TAX * 100)}%`);
+    console.log("Số tiền cần thanh toán: " + finalPrice);  
 }
